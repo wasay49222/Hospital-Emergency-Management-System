@@ -11,6 +11,7 @@ private:
     std::string status; // "waiting", "treated"
 
 public:
+    Patient(); // Default constructor (Fixes the unordered_map error)
     Patient(int id, std::string name, int age, int severityLevel);
     
     // Getters

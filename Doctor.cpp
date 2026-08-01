@@ -1,5 +1,7 @@
 #include "Doctor.h"
 
+Doctor::Doctor() : id(0), name("Unknown"), specialization("General"), isAvailable(true) {}
+
 Doctor::Doctor(int id, std::string name, std::string specialization) 
     : id(id), name(name), specialization(specialization), isAvailable(true) {}
 

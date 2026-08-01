@@ -1,4 +1,7 @@
 #include "Bed.h"
+#include <string> // Added this to fix the std::to_string error
+
+Bed::Bed() : bedId(0), isOccupied(false), patientId(0) {}
 
 Bed::Bed(int bedId) : bedId(bedId), isOccupied(false), patientId(0) {}
 

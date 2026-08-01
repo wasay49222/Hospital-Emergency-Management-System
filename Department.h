@@ -13,15 +13,15 @@ private:
 public:
     Department(std::string name);
 
-    // Getters
     std::string getName() const;
     const std::vector<Doctor>& getDoctors() const;
     const std::vector<Bed>& getBeds() const;
 
-    // Actions
     void addDoctor(const Doctor& doctor);
     void addBed(const Bed& bed);
+    
+    // New: Allocate a free bed to a patient
+    bool allocateBed(int patientId);
 
-    // Utility
     void displayInfo() const;
 };

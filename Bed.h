@@ -8,17 +8,14 @@ private:
     int patientId; // 0 if empty
 
 public:
+    Bed(); // Default constructor
     Bed(int bedId);
 
-    // Getters
     int getBedId() const;
     bool getIsOccupied() const;
     int getPatientId() const;
 
-    // Actions
     void occupy(int patientId);
     void free();
-
-    // Utility
     void displayInfo() const;
 };

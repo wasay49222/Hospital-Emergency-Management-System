@@ -1,5 +1,9 @@
 #include "Patient.h"
 
+// Default constructor
+Patient::Patient() : id(0), name("Unknown"), age(0), severityLevel(5), status("waiting") {}
+
+// Parameterized constructor
 Patient::Patient(int id, std::string name, int age, int severityLevel) 
     : id(id), name(name), age(age), severityLevel(severityLevel), status("waiting") {}
 

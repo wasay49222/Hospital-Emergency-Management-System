@@ -15,12 +15,16 @@ void PatientRecordBST::clearTree(BSTNode* node) {
     }
 }
 
+void PatientRecordBST::clear() {
+    clearTree(root);
+    root = nullptr;
+}
+
 void PatientRecordBST::insertHelper(BSTNode*& node, const Patient& patient) {
     if (node == nullptr) {
         node = new BSTNode(patient);
         return;
     }
-    // If ID is smaller, go left. Otherwise, go right.
     if (patient.getId() < node->patient.getId()) {
         insertHelper(node->left, patient);
     } else {
@@ -33,8 +37,8 @@ void PatientRecordBST::insertPatient(const Patient& patient) {
 }
 
 Patient* PatientRecordBST::searchHelper(BSTNode* node, int id) const {
-    if (node == nullptr) return nullptr; // Not found
-    if (node->patient.getId() == id) return &(node->patient); // Found!
+    if (node == nullptr) return nullptr; 
+    if (node->patient.getId() == id) return &(node->patient); 
     
     if (id < node->patient.getId()) {
         return searchHelper(node->left, id);

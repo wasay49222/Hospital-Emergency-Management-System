@@ -24,6 +24,7 @@ public:
     ~PatientRecordBST(); // Cleans up memory when program ends
     
     void insertPatient(const Patient& patient);
-    Patient* searchPatient(int id) const; // Returns a pointer so we can update the patient's status later
+    Patient* searchPatient(int id) const; 
     void displayAllRecords() const;
+    void clear(); // Clears the tree so we can rebuild it after an undo or load
 };
