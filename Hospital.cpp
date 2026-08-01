@@ -1,5 +1,6 @@
 #include "Hospital.h"
 #include <iostream>
+#include <algorithm> // Added this to fix the std::sort error
 
 Hospital::Hospital() {
     setupDepartments();
@@ -98,7 +99,7 @@ void Hospital::displayAllRecords() const {
     patientTree.displayAllRecords();
 }
 
-// --- LEVEL 5 IMPLEMENTATIONS ---
+// --- LEVEL 5 & WEB SERVER IMPLEMENTATIONS ---
 
 void Hospital::rebuildBST() {
     patientTree.clear();
@@ -152,4 +153,17 @@ void Hospital::loadData(const std::string& filename) {
     if (!loadedPatients.empty()) {
         std::cout << "Data loaded successfully into the active system.\n";
     }
+}
+
+// --- NEW: Helper for the Web Server ---
+std::vector<Patient> Hospital::getAllPatients() const {
+    std::vector<Patient> patients;
+    for (const auto& pair : patientRecords) {
+        patients.push_back(pair.second);
+    }
+    // Sort by ID so the frontend displays them neatly
+    std::sort(patients.begin(), patients.end(), [](const Patient& a, const Patient& b) {
+        return a.getId() < b.getId();
+    });
+    return patients;
 }

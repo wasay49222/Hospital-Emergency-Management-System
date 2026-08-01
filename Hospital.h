@@ -27,6 +27,7 @@ private:
     void rebuildBST();           // Helper to rebuild the tree after an undo/load
 
 public:
+    std::vector<Patient> getAllPatients() const; // NEW: For the web server
     Hospital();
     
     // Setup
