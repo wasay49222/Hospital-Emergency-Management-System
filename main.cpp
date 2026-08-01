@@ -1,49 +1,63 @@
 #include <iostream>
 #include "Patient.h"
-#include "Doctor.h"
-#include "Bed.h"
-#include "Department.h"
 #include "PatientQueue.h"
 #include "PriorityQueueManager.h"
+#include "PatientRecordBST.h"
+#include "HospitalGraph.h"
 
 int main() {
-    std::cout << "=== Hospital Emergency Management System - Level 2 Test ===\n\n";
+    std::cout << "=== Hospital Emergency Management System - Level 3 Test ===\n\n";
 
-    // 1. Create patients with different severities (1 = Critical, 5 = Minor)
-    Patient p1(101, "John Doe", 45, 4);    // Severity 4
-    Patient p2(102, "Jane Smith", 30, 1);  // Severity 1 (Critical!)
-    Patient p3(103, "Bob Johnson", 50, 3); // Severity 3
-    Patient p4(104, "Alice Brown", 25, 5); // Severity 5
-
-    // 2. Test Normal Patient Queue (FIFO)
-    PatientQueue normalQueue;
-    normalQueue.addPatient(p1);
-    normalQueue.addPatient(p4);
+    // --- PART 1: Test Binary Search Tree (BST) ---
+    std::cout << "--- 1. Testing Patient Record BST ---\n";
+    PatientRecordBST records;
     
-    std::cout << "Adding John (Severity 4) and Alice (Severity 5) to Normal Queue:\n";
-    normalQueue.displayQueue();
+    Patient p1(105, "Charlie", 40, 2);
+    Patient p2(101, "Alice", 30, 4);
+    Patient p3(109, "Bob", 55, 1);
+    
+    // Insert in random order; BST will sort them by ID automatically
+    records.insertPatient(p1);
+    records.insertPatient(p2);
+    records.insertPatient(p3);
+    
+    records.displayAllRecords();
 
-    // 3. Test Emergency Priority Queue (Max-Heap based on urgency)
-    PriorityQueueManager emergencyQueue;
-    emergencyQueue.addPatient(p1); 
-    emergencyQueue.addPatient(p2); // Critical patient added in the middle
-    emergencyQueue.addPatient(p3);
-    emergencyQueue.addPatient(p4);
-
-    std::cout << "\nAdding ALL patients to Emergency Queue:\n";
-    emergencyQueue.displayQueue();
-
-    // 4. Simulate Triage: Treat the most critical patient first
-    std::cout << "\n--- Simulating Triage ---\n";
-    if (!emergencyQueue.isEmpty()) {
-        Patient nextPatient = emergencyQueue.removePatient();
-        std::cout << "Treating most critical patient: ";
-        nextPatient.displayInfo();
+    // Search for a patient
+    int searchId = 101;
+    Patient* found = records.searchPatient(searchId);
+    if (found) {
+        std::cout << "Search Successful! Found: ";
+        found->displayInfo();
+        // We can even update the patient directly through the pointer
+        found->setStatus("treated");
+        std::cout << "(Status updated to 'treated')\n";
+    } else {
+        std::cout << "Patient with ID " << searchId << " not found.\n";
     }
 
-    std::cout << "\nEmergency Queue after treating one patient:\n";
-    emergencyQueue.displayQueue();
+    // --- PART 2: Test Hospital Graph (BFS Routing) ---
+    std::cout << "\n--- 2. Testing Hospital Graph Routing (BFS) ---\n";
+    HospitalGraph hospitalMap;
+    
+    // Add departments
+    hospitalMap.addDepartment("Emergency Entrance");
+    hospitalMap.addDepartment("Triage");
+    hospitalMap.addDepartment("ICU");
+    hospitalMap.addDepartment("Surgery");
+    hospitalMap.addDepartment("Radiology");
 
-    std::cout << "\n=== Level 2 Setup Successful! ===\n";
+    // Add corridors (connections)
+    hospitalMap.addCorridor("Emergency Entrance", "Triage");
+    hospitalMap.addCorridor("Triage", "ICU");
+    hospitalMap.addCorridor("Triage", "Radiology");
+    hospitalMap.addCorridor("Radiology", "Surgery");
+    hospitalMap.addCorridor("ICU", "Surgery"); // Direct path
+
+    // Find shortest path
+    std::cout << "\nRouting an ambulance from 'Emergency Entrance' to 'Surgery':\n";
+    hospitalMap.findShortestPath("Emergency Entrance", "Surgery");
+
+    std::cout << "\n=== Level 3 Setup Successful! ===\n";
     return 0;
 }
